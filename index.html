@@ -3,76 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CashCatcher </title>
+  <title>CashCatcher 💖</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Floating money background -->
-  <div class="floating-money">
-    <span class="money">💵</span>
-    <span class="money">৳</span>
-    <span class="money">💵</span>
-    <span class="money">৳</span>
-    <span class="money">💵</span>
-  </div>
-
   <div class="app">
-    <h1>💚 CashCatcher <span class="coin">🪙</span></h1>
-    <p class="tagline">Track your money, stay on budget ✨</p>
+    <h1>💖 CashCatcher 💖</h1>
 
-    <!-- Budget Section -->
     <div class="budget-section">
-      <label for="budget">Set Budget: <span class="coin">🪙</span></label>
-      <input type="number" id="budget" placeholder="Enter your monthly budget">
-
-      <!-- Currency Selector -->
+      <input type="number" id="budget" placeholder="Enter your budget">
       <select id="currency">
-        <option value="$">💵 Dollar</option>
-        <option value="৳">৳ Taka</option>
-        <option value="€">€ Euro</option>
+        <option value="$">Dollar ($)</option>
+        <option value="৳">Taka (৳)</option>
+        <option value="€">Euro (€)</option>
       </select>
-
-      <button onclick="setBudget()">Set</button>
+      <button onclick="setBudget()">Set Budget</button>
       <p id="budget-display"></p>
     </div>
 
-    <!-- Add Expense -->
     <div class="expense-section">
-      <h2>Add Expense <span class="coin">🪙</span></h2>
-      <input type="text" id="desc" placeholder="Description (e.g. Pizza 🍕)">
+      <input type="text" id="desc" placeholder="Expense description">
       <input type="number" id="amount" placeholder="Amount">
       <select id="category">
-        <option>🍕 Food</option>
-        <option>🛍️ Shopping</option>
-        <option>💄 Beauty</option>
-        <option>🎬 Entertainment</option>
-        <option>✈️ Travel</option>
-        <option>🏡 Others</option>
+        <option value="🍕 Food">🍕 Food</option>
+        <option value="🛍️ Shopping">🛍️ Shopping</option>
+        <option value="💄 Beauty">💄 Beauty</option>
+        <option value="🚗 Travel">🚗 Travel</option>
+        <option value="📚 Education">📚 Education</option>
       </select>
-      <button onclick="addExpense()">Add</button>
+      <button onclick="addExpense()">Add Expense</button>
     </div>
 
-    <!-- Save Section -->
-    <div class="save-section">
-      <button onclick="saveExpenses()">💾 Save Expenses <span class="coin">🪙</span></button>
-    </div>
+    <ul id="expense-list"></ul>
 
-    <!-- Expense List -->
-    <div class="list-section">
-      <h2>Expenses <span class="coin">🪙</span></h2>
-      <ul id="expense-list"></ul>
-    </div>
-
-    <!-- Totals -->
     <div class="total-section">
       <h2>Summary <span class="coin">🪙</span></h2>
-      <p id="total">Total Spent: <span class="coin">🪙</span>0</p>
-      <p id="balance">Remaining Balance: <span class="coin">🪙</span>0</p>
+      <p id="total">Total Spent: <span class="coin">💖</span>0</p>
+      <p id="balance">Remaining Balance: <span class="coin">💖</span>0</p>
+      <p class="fun-reply" id="fun-reply"></p>
     </div>
+
+    <button onclick="saveExpenses()" class="save-btn">Save 💾</button>
   </div>
+
+  <!-- Floating background icons -->
+  <div class="floating-icons">💖💸💖💸</div>
 
   <script src="script.js"></script>
 </body>
 </html>
-<p class="fun-reply" id="fun-reply"></p>
-
