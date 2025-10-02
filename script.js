@@ -2,10 +2,26 @@ let expenses = [];
 let budget = 0;
 let currency = "$"; // default
 
+// Load previous expenses from Local Storage
+function loadExpenses() {
+  let data = JSON.parse(localStorage.getItem("cashcatcherData"));
+  if (data) {
+    budget = data.budget;
+    currency = data.currency;
+    expenses = data.expenses || [];
+
+    document.getElementById("budget").value = budget;
+    document.getElementById("currency").value = currency;
+    document.getElementById("budget-display").innerText = `Budget set: ${currency}${budget}`;
+    displayExpenses();
+    updateSummary();
+  }
+}
+
 // Set budget and currency
 function setBudget() {
   budget = parseFloat(document.getElementById("budget").value);
-  currency = document.getElementById("currency").value; // user selected
+  currency = document.getElementById("currency").value;
 
   if (isNaN(budget) || budget <= 0) {
     alert("Please enter a valid budget!");
@@ -70,3 +86,12 @@ function updateSummary() {
     alert("Bestie... you went OVER budget 💳💔");
   }
 }
+
+// Save expenses to Local Storage
+function saveExpenses() {
+  localStorage.setItem("cashcatcherData", JSON.stringify({ budget, currency, expenses }));
+  alert("Your expenses have been saved! 💾");
+}
+
+// Load expenses when page loads
+window.onload = loadExpenses;
