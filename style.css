@@ -1,4 +1,4 @@
-/* General page styling */
+/* Fullscreen body */
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #ffb6d9, #ff69b4);
@@ -7,36 +7,44 @@ body {
   padding: 0;
   overflow-x: hidden;
   color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* App container */
+/* App container takes full screen */
 .app {
-  max-width: 500px;
-  margin: 30px auto;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 0 20px rgba(255, 20, 147, 0.5);
+  width: 100%;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 0; /* no corner cut since it's fullscreen */
+  padding: 40px 20px;
+  box-shadow: inset 0 0 50px rgba(255, 20, 147, 0.3);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
 }
 
 /* Heading */
 h1 {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4;
+  margin-bottom: 20px;
 }
 
 /* Inputs & buttons */
 input, select, button {
-  padding: 10px;
-  margin: 8px;
-  border-radius: 10px;
+  padding: 12px;
+  margin: 10px;
+  border-radius: 12px;
   border: none;
   font-size: 1rem;
 }
 
 input, select {
-  width: 60%;
+  width: 220px;
   max-width: 250px;
 }
 
@@ -45,7 +53,7 @@ button {
   color: white;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 0 10px #ff69b4;
+  box-shadow: 0 0 15px #ff69b4;
   transition: 0.3s;
 }
 
@@ -58,13 +66,15 @@ button:hover {
 ul {
   list-style: none;
   padding: 0;
+  margin: 20px 0;
 }
 
 li {
-  margin: 8px 0;
-  padding: 10px;
+  margin: 8px auto;
+  padding: 12px;
+  width: 90%;
   background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
+  border-radius: 12px;
   font-weight: 500;
   display: flex;
   justify-content: space-between;
@@ -73,11 +83,11 @@ li {
 
 /* Neon reply */
 #fun-reply {
-  margin-top: 12px;
+  margin-top: 15px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 18px;
   text-align: center;
-  min-height: 20px;
+  min-height: 24px;
 }
 
 .neon {
@@ -104,16 +114,16 @@ li {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  font-size: 2rem;
+  font-size: 2.5rem;
   animation: float 6s infinite linear alternate;
-  opacity: 0.15;
+  opacity: 0.12;
   text-align: center;
   line-height: 100vh;
 }
 
 @keyframes float {
   from { transform: translateY(0); }
-  to { transform: translateY(-20px); }
+  to { transform: translateY(-30px); }
 }
 
 /* Mini coin spin */
