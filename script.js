@@ -1,6 +1,13 @@
 let expenses = [];
 let budget = 0;
 let currency = "$"; // default
+let replies = [
+  "💖 Spend wisely!",
+  "✨ Careful, money vibes alert!",
+  "💸 Oops, a little splurge!",
+  "🫣 Watch that budget!",
+  "✨ Balance intact!"
+];
 
 // Load previous expenses from Local Storage
 function loadExpenses() {
@@ -24,7 +31,7 @@ function setBudget() {
   currency = document.getElementById("currency").value;
 
   if (isNaN(budget) || budget <= 0) {
-    alert("Please enter a valid budget!");
+    alert("Enter a valid budget!");
     return;
   }
 
@@ -39,7 +46,7 @@ function addExpense() {
   let category = document.getElementById("category").value;
 
   if (!desc || isNaN(amount) || amount <= 0) {
-    alert("Please enter valid description and amount!");
+    alert("Enter valid description and amount!");
     return;
   }
 
@@ -49,24 +56,25 @@ function addExpense() {
   displayExpenses();
   updateSummary();
 
-  // Clear input fields
+  // Fun gender-neutral reply
+  let reply = replies[Math.floor(Math.random() * replies.length)];
+  alert(reply);
+
+  // Clear inputs
   document.getElementById("desc").value = "";
   document.getElementById("amount").value = "";
 }
 
-// Display expenses list with mini coins
+// Display expenses with mini coins
 function displayExpenses() {
   let list = document.getElementById("expense-list");
   list.innerHTML = "";
 
   expenses.forEach((exp, index) => {
     let li = document.createElement("li");
-    
-    // Mini spinning coin next to amount
     li.innerHTML = `${exp.date} - ${exp.desc} (${exp.category}) 
-      <b><span class="coin">🪙</span>${currency}${exp.amount.toFixed(2)}</b> 
+      <b><span class="coin">💖</span>${currency}${exp.amount.toFixed(2)}</b> 
       <button onclick="deleteExpense(${index})">❌</button>`;
-
     list.appendChild(li);
   });
 }
@@ -78,22 +86,26 @@ function deleteExpense(index) {
   updateSummary();
 }
 
-// Update total spent and remaining balance
+// Update totals with gender-neutral fun messages
 function updateSummary() {
   let totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
-  document.getElementById("total").innerHTML = `Total Spent: <span class="coin">🪙</span>${currency}${totalSpent.toFixed(2)}`;
-  document.getElementById("balance").innerHTML = `Remaining Balance: <span class="coin">🪙</span>${currency}${(budget - totalSpent).toFixed(2)}`;
+  let remaining = budget - totalSpent;
+
+  document.getElementById("total").innerHTML = `Total Spent: <span class="coin">💖</span>${currency}${totalSpent.toFixed(2)}`;
+  
+  let balanceText = `Remaining Balance: <span class="coin">💖</span>${currency}${remaining.toFixed(2)}`;
+  if (remaining <= 0) balanceText += " 😱 Uh-oh, broke vibes!";
+  else if (remaining < budget*0.2) balanceText += " 🫣 Careful!";
+  else balanceText += " ✨ Budget safe!";
+
+  document.getElementById("balance").innerHTML = balanceText;
 }
 
 // Save expenses & budget to localStorage
 function saveExpenses() {
-  let data = {
-    budget: budget,
-    currency: currency,
-    expenses: expenses
-  };
+  let data = { budget, currency, expenses };
   localStorage.setItem("cashcatcherData", JSON.stringify(data));
-  alert("Expenses saved successfully! 💾");
+  alert("Saved successfully! 💾💖");
 }
 
 // Initialize
