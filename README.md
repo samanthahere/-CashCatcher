@@ -1,4 +1,4 @@
-# 💚 CashCatcher
+#  CashCatcher
 
 A cute dark green money-themed **budget tracker**.  
 Helps you record expenses, track categories with emojis (🍕 🛍️ 💄), and stay within budget.  
