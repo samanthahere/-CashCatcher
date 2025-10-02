@@ -1,10 +1,11 @@
 let expenses = [];
 let budget = 0;
-let currency = "$"; // default is Dollar
+let currency = "$"; // default
 
+// Set budget and currency
 function setBudget() {
   budget = parseFloat(document.getElementById("budget").value);
-  currency = document.getElementById("currency").value; // get selected currency
+  currency = document.getElementById("currency").value; // user selected
 
   if (isNaN(budget) || budget <= 0) {
     alert("Please enter a valid budget!");
@@ -15,6 +16,7 @@ function setBudget() {
   updateSummary();
 }
 
+// Add a new expense
 function addExpense() {
   let desc = document.getElementById("desc").value;
   let amount = parseFloat(document.getElementById("amount").value);
@@ -35,6 +37,7 @@ function addExpense() {
   document.getElementById("amount").value = "";
 }
 
+// Display all expenses
 function displayExpenses() {
   let list = document.getElementById("expense-list");
   list.innerHTML = "";
@@ -48,12 +51,14 @@ function displayExpenses() {
   });
 }
 
+// Delete expense
 function deleteExpense(index) {
   expenses.splice(index, 1);
   displayExpenses();
   updateSummary();
 }
 
+// Update totals
 function updateSummary() {
   let total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
   let balance = budget - total;
