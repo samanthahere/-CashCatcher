@@ -179,4 +179,21 @@ button:hover {
   50% { opacity: 0.8; }
   100% { transform: translateY(-100vh) rotate(360deg); opacity:0.5; }
 }
+#fun-reply {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+}
+
+.neon {
+  color: #ff6ec7;
+  text-shadow:
+    0 0 5px #ff6ec7,
+    0 0 10px #ff6ec7,
+    0 0 20px #ff6ec7,
+    0 0 40px #ff69b4;
+  transition: opacity 0.5s;
+}
+
 
