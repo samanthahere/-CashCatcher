@@ -49,11 +49,12 @@ function addExpense() {
   displayExpenses();
   updateSummary();
 
+  // Clear input fields
   document.getElementById("desc").value = "";
   document.getElementById("amount").value = "";
 }
 
-// Display all expenses
+// Display expenses list
 function displayExpenses() {
   let list = document.getElementById("expense-list");
   list.innerHTML = "";
@@ -61,37 +62,36 @@ function displayExpenses() {
   expenses.forEach((exp, index) => {
     let li = document.createElement("li");
     li.innerHTML = `${exp.date} - ${exp.desc} (${exp.category}) 
-      <b>${currency}${exp.amount}</b> 
+      <b>${currency}${exp.amount.toFixed(2)}</b> 
       <button onclick="deleteExpense(${index})">❌</button>`;
     list.appendChild(li);
   });
 }
 
-// Delete expense
+// Delete an expense
 function deleteExpense(index) {
   expenses.splice(index, 1);
   displayExpenses();
   updateSummary();
 }
 
-// Update totals
+// Update total spent and remaining balance
 function updateSummary() {
-  let total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-  let balance = budget - total;
-
-  document.getElementById("total").innerText = `Total Spent: ${currency}${total}`;
-  document.getElementById("balance").innerText = `Remaining Balance: ${currency}${balance}`;
-
-  if (budget > 0 && balance < 0) {
-    alert("Bestie... you went OVER budget 💳💔");
-  }
+  let totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
+  document.getElementById("total").innerHTML = `Total Spent: <span class="coin">🪙</span>${currency}${totalSpent.toFixed(2)}`;
+  document.getElementById("balance").innerHTML = `Remaining Balance: <span class="coin">🪙</span>${currency}${(budget - totalSpent).toFixed(2)}`;
 }
 
-// Save expenses to Local Storage
+// Save expenses & budget to localStorage
 function saveExpenses() {
-  localStorage.setItem("cashcatcherData", JSON.stringify({ budget, currency, expenses }));
-  alert("Your expenses have been saved! 💾");
+  let data = {
+    budget: budget,
+    currency: currency,
+    expenses: expenses
+  };
+  localStorage.setItem("cashcatcherData", JSON.stringify(data));
+  alert("Expenses saved successfully! 💾");
 }
 
-// Load expenses when page loads
+// Initialize
 window.onload = loadExpenses;
