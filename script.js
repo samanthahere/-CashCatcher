@@ -1,13 +1,17 @@
 let expenses = [];
 let budget = 0;
+let currency = "$"; // default is Dollar
 
 function setBudget() {
   budget = parseFloat(document.getElementById("budget").value);
+  currency = document.getElementById("currency").value; // get selected currency
+
   if (isNaN(budget) || budget <= 0) {
     alert("Please enter a valid budget!");
     return;
   }
-  document.getElementById("budget-display").innerText = `Budget set: $${budget}`;
+
+  document.getElementById("budget-display").innerText = `Budget set: ${currency}${budget}`;
   updateSummary();
 }
 
@@ -37,7 +41,8 @@ function displayExpenses() {
 
   expenses.forEach((exp, index) => {
     let li = document.createElement("li");
-    li.innerHTML = `${exp.date} - ${exp.desc} (${exp.category}) <b>$${exp.amount}</b> 
+    li.innerHTML = `${exp.date} - ${exp.desc} (${exp.category}) 
+      <b>${currency}${exp.amount}</b> 
       <button onclick="deleteExpense(${index})">❌</button>`;
     list.appendChild(li);
   });
@@ -53,8 +58,8 @@ function updateSummary() {
   let total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
   let balance = budget - total;
 
-  document.getElementById("total").innerText = `Total Spent: $${total}`;
-  document.getElementById("balance").innerText = `Remaining Balance: $${balance}`;
+  document.getElementById("total").innerText = `Total Spent: ${currency}${total}`;
+  document.getElementById("balance").innerText = `Remaining Balance: ${currency}${balance}`;
 
   if (budget > 0 && balance < 0) {
     alert("Bestie... you went OVER budget 💳💔");
