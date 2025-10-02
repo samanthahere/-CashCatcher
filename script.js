@@ -9,7 +9,7 @@ let replies = [
   "✨ Balance intact!"
 ];
 
-// Load previous expenses from Local Storage
+// Load previous expenses from localStorage
 function loadExpenses() {
   let data = JSON.parse(localStorage.getItem("cashcatcherData"));
   if (data) {
@@ -56,9 +56,17 @@ function addExpense() {
   displayExpenses();
   updateSummary();
 
-  // Fun gender-neutral reply
+  // Show fun neon reply
   let reply = replies[Math.floor(Math.random() * replies.length)];
-  alert(reply);
+  let replyElement = document.getElementById("fun-reply");
+  replyElement.innerText = reply;
+  replyElement.classList.add("neon");
+
+  // Fade out after 4 seconds
+  setTimeout(() => {
+    replyElement.innerText = "";
+    replyElement.classList.remove("neon");
+  }, 4000);
 
   // Clear inputs
   document.getElementById("desc").value = "";
@@ -86,13 +94,13 @@ function deleteExpense(index) {
   updateSummary();
 }
 
-// Update totals with gender-neutral fun messages
+// Update totals and remaining balance
 function updateSummary() {
   let totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
   let remaining = budget - totalSpent;
 
   document.getElementById("total").innerHTML = `Total Spent: <span class="coin">💖</span>${currency}${totalSpent.toFixed(2)}`;
-  
+
   let balanceText = `Remaining Balance: <span class="coin">💖</span>${currency}${remaining.toFixed(2)}`;
   if (remaining <= 0) balanceText += " 😱 Uh-oh, broke vibes!";
   else if (remaining < budget*0.2) balanceText += " 🫣 Careful!";
@@ -101,7 +109,7 @@ function updateSummary() {
   document.getElementById("balance").innerHTML = balanceText;
 }
 
-// Save expenses & budget to localStorage
+// Save expenses and budget to localStorage
 function saveExpenses() {
   let data = { budget, currency, expenses };
   localStorage.setItem("cashcatcherData", JSON.stringify(data));
