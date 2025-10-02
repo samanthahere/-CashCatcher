@@ -1,4 +1,4 @@
-/* General Body and App */
+/* Body & App */
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #0b3d0b, #145214);
@@ -7,8 +7,11 @@ body {
   padding: 0;
   display: flex;
   justify-content: center;
+  position: relative;
+  overflow-x: hidden;
 }
 
+/* Container */
 .app {
   max-width: 500px;
   margin-top: 20px;
@@ -16,9 +19,11 @@ body {
   background: linear-gradient(145deg, #1b5e1b, #2a7f2a);
   border-radius: 25px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+  position: relative;
+  z-index: 1;
 }
 
-/* Headers and tagline */
+/* Headers & tagline */
 h1 {
   text-align: center;
   color: #f0ffe0;
@@ -46,8 +51,8 @@ input, select, button {
 }
 
 button {
-  background: #6fcd6f;
-  color: white;
+  background: linear-gradient(90deg, #a8e6a3, #6fcf6f);
+  color: #fff;
   cursor: pointer;
   font-weight: bold;
   transition: 0.3s;
@@ -55,15 +60,17 @@ button {
 }
 
 button:hover {
-  background: #4fb84f;
+  background: linear-gradient(90deg, #6fcf6f, #3fa03f);
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0,0,0,0.5);
 }
 
-/* Expense list */
+/* Expense List */
 .list-section ul {
   list-style: none;
   padding: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .list-section li {
@@ -113,12 +120,16 @@ button:hover {
   font-size: 16px;
   color: #fff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 1;
 }
 
 /* Save section */
 .save-section {
   text-align: center;
   margin: 15px 0;
+  position: relative;
+  z-index: 1;
 }
 
 /* Coin emoji animation */
@@ -134,5 +145,38 @@ button:hover {
   0% { transform: rotate(0deg); }
   50% { transform: rotate(180deg); }
   100% { transform: rotate(360deg); }
+}
+
+/* Floating money animation background */
+.floating-money {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.money {
+  position: absolute;
+  font-size: 24px;
+  opacity: 0.7;
+  animation: float 10s linear infinite;
+}
+
+/* Random start positions */
+.money:nth-child(1) { left: 5%; animation-delay: 0s; }
+.money:nth-child(2) { left: 20%; animation-delay: 2s; }
+.money:nth-child(3) { left: 40%; animation-delay: 4s; }
+.money:nth-child(4) { left: 60%; animation-delay: 6s; }
+.money:nth-child(5) { left: 80%; animation-delay: 8s; }
+
+/* Floating animation */
+@keyframes float {
+  0% { transform: translateY(100vh) rotate(0deg); opacity:0.7; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity:0.7; }
 }
 
