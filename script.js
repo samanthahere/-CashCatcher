@@ -54,16 +54,19 @@ function addExpense() {
   document.getElementById("amount").value = "";
 }
 
-// Display expenses list
+// Display expenses list with mini coins
 function displayExpenses() {
   let list = document.getElementById("expense-list");
   list.innerHTML = "";
 
   expenses.forEach((exp, index) => {
     let li = document.createElement("li");
+    
+    // Mini spinning coin next to amount
     li.innerHTML = `${exp.date} - ${exp.desc} (${exp.category}) 
-      <b>${currency}${exp.amount.toFixed(2)}</b> 
+      <b><span class="coin">🪙</span>${currency}${exp.amount.toFixed(2)}</b> 
       <button onclick="deleteExpense(${index})">❌</button>`;
+
     list.appendChild(li);
   });
 }
