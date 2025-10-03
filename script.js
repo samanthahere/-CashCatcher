@@ -24,6 +24,9 @@ function addExpense() {
   expenses.push({ category, amount });
   displayExpenses();
   updateSummary();
+
+  document.getElementById("category").value = "";
+  document.getElementById("amount").value = "";
 }
 
 function displayExpenses() {
@@ -49,9 +52,9 @@ function updateSummary() {
   document.getElementById("balance").innerHTML = `Remaining Balance: ${currency}${remaining.toFixed(2)}`;
 
   let reply = "";
-  if (remaining <= 0) reply = "😱 You’re broke!";
-  else if (remaining < budget * 0.2) reply = "⚠️ Careful, low funds!";
-  else reply = "💖 You’re spending smart!";
+  if (remaining <= 0) reply = "😱 You’re broke, stop spending!";
+  else if (remaining < budget * 0.2) reply = "⚠️ Careful, funds running low!";
+  else reply = "💖 Spending smart, keep it up!";
 
   document.getElementById("fun-reply").innerText = reply;
 }
@@ -79,4 +82,3 @@ function loadExpenses() {
 
 window.onload = loadExpenses;
 
-   
