@@ -2,52 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CashCatcher 💖</title>
+  <title>💖 Pink Expense Tracker 💸</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="app">
-    <h1>💖 CashCatcher 💖</h1>
+    <h1>💖 Pink Expense Tracker 💸</h1>
 
-    <div class="budget-section">
-      <input type="number" id="budget" placeholder="Enter your budget">
-      <select id="currency">
-        <option value="$">Dollar ($)</option>
-        <option value="৳">Taka (৳)</option>
-        <option value="€">Euro (€)</option>
-      </select>
-      <button onclick="setBudget()">Set Budget</button>
-      <p id="budget-display"></p>
-    </div>
-
-    <div class="expense-section">
-      <input type="text" id="desc" placeholder="Expense description">
+    <div>
+      <input type="text" id="desc" placeholder="Description">
       <input type="number" id="amount" placeholder="Amount">
       <select id="category">
-        <option value="🍕 Food">🍕 Food</option>
-        <option value="🛍️ Shopping">🛍️ Shopping</option>
-        <option value="💄 Beauty">💄 Beauty</option>
-        <option value="🚗 Travel">🚗 Travel</option>
-        <option value="📚 Education">📚 Education</option>
+        <option>🍕 Food</option>
+        <option>🛍️ Shopping</option>
+        <option>💄 Beauty</option>
+        <option>🚗 Travel</option>
       </select>
-      <button onclick="addExpense()">Add Expense</button>
+      <select id="currency-select">
+        <option value="$">Dollar ($)</option>
+        <option value="€">Euro (€)</option>
+        <option value="৳">Taka (৳)</option>
+      </select>
+      <button onclick="addExpense()">➕ Add Expense</button>
     </div>
 
     <ul id="expense-list"></ul>
 
-    <div class="total-section">
-      <h2>Summary <span class="coin">🪙</span></h2>
-      <p id="total">Total Spent: <span class="coin">💖</span>0</p>
-      <p id="balance">Remaining Balance: <span class="coin">💖</span>0</p>
-      <p class="fun-reply" id="fun-reply"></p>
-    </div>
-
-    <button onclick="saveExpenses()" class="save-btn">Save 💾</button>
+    <h2>Total: <span id="total">0</span></h2>
+    <div id="fun-reply"></div>
+    <button class="save-btn" onclick="saveExpenses()">💾 Save My Expenses</button>
   </div>
-
-  <!-- Floating background icons -->
-  <div class="floating-icons">💖💸💖💸</div>
 
   <script src="script.js"></script>
 </body>
