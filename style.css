@@ -1,3 +1,4 @@
+/* Fullscreen body */
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #ff9ec7, #ff4da6);
@@ -8,18 +9,24 @@ body {
   color: white;
 }
 
+/* App container */
 .app {
   flex: 1;
   padding: 30px 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Title */
 h1 {
   font-size: 3rem;
   margin-bottom: 25px;
   text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4;
 }
 
+/* Inputs & buttons */
 input, select, button {
   padding: 12px;
   margin: 10px;
@@ -28,27 +35,37 @@ input, select, button {
   font-size: 1rem;
 }
 
+input, select {
+  width: 220px;
+  max-width: 250px;
+}
+
 button {
   background: #ff69b4;
   color: white;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 0 10px #ff69b4;
+  transition: 0.3s;
 }
 
 button:hover {
   background: #ff85c1;
+  transform: scale(1.05);
 }
 
+/* Expense list */
 ul {
   list-style: none;
   padding: 0;
+  margin-top: 20px;
+  width: 90%;
+  max-width: 500px;
 }
 
 li {
   margin: 8px auto;
   padding: 12px;
-  width: 90%;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   display: flex;
@@ -58,13 +75,16 @@ li {
 
 /* Neon reply */
 #fun-reply {
-  margin-top: 15px;
+  margin-top: 20px;
   font-weight: bold;
   font-size: 20px;
-  text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4;
+  text-shadow:
+    0 0 5px #fff,
+    0 0 15px #ff69b4,
+    0 0 25px #ff69b4;
 }
 
-/* Footer copyright */
+/* Footer */
 footer {
   text-align: center;
   padding: 15px;
