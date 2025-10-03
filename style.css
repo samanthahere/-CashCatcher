@@ -77,7 +77,7 @@ li {
   color: white;
 }
 
-#fun-reply {
+#fun-reply, #budget-status {
   margin-top: 15px;
   font-weight: 600;
   font-size: 18px;
@@ -103,4 +103,13 @@ li {
 @keyframes spin {
   from { transform: rotateY(0deg); }
   to { transform: rotateY(360deg); }
+}
+
+footer {
+  margin-top: auto;
+  padding: 15px;
+  font-size: 14px;
+  text-align: center;
+  color: white;
+  opacity: 0.8;
 }
