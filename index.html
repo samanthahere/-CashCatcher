@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title> CashCatcher </title>
+  <title> CashCatcher </title>title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,11 +26,22 @@
       <button onclick="addExpense()">➕ Add Expense</button>
     </div>
 
+    <div>
+      <input type="number" id="budget" placeholder="Set Monthly Budget">
+      <button onclick="setBudget()">📅 Set Budget</button>
+    </div>
+
     <ul id="expense-list"></ul>
 
     <h2>Total: <span id="total">0</span></h2>
+    <h3 id="budget-status"></h3>
     <div id="fun-reply"></div>
+
     <button class="save-btn" onclick="saveExpenses()">💾 Save My Expenses</button>
+
+    <footer>
+      <p>© 2025 Samantha. All Rights Reserved.</p>
+    </footer>
   </div>
 
   <script src="script.js"></script>
