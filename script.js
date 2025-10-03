@@ -1,95 +1,82 @@
-let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-let currency = localStorage.getItem("currency") || "$";
-let budget = localStorage.getItem("budget") ? parseFloat(localStorage.getItem("budget")) : null;
+let budget = 0;
+let expenses = [];
+let currency = "$";
 
-document.getElementById("currency-select").value = currency;
-if (budget) document.getElementById("budget").value = budget;
+function setBudget() {
+  budget = parseFloat(document.getElementById("budget-input").value);
+  currency = document.getElementById("currency").value;
+
+  if (isNaN(budget) || budget <= 0) {
+    alert("Please enter a valid budget!");
+    return;
+  }
+
+  document.getElementById("expense-section").style.display = "block";
+  updateSummary();
+}
 
 function addExpense() {
-  let desc = document.getElementById("desc").value;
-  let amount = parseFloat(document.getElementById("amount").value);
   let category = document.getElementById("category").value;
-  let date = new Date().toLocaleDateString();
+  let amount = parseFloat(document.getElementById("amount").value);
 
-  if (!desc || isNaN(amount)) return;
+  if (category === "" || isNaN(amount) || amount <= 0) return;
 
-  expenses.push({ desc, amount, category, date });
+  expenses.push({ category, amount });
   displayExpenses();
-  updateTotal();
-  document.getElementById("desc").value = "";
-  document.getElementById("amount").value = "";
+  updateSummary();
 }
 
 function displayExpenses() {
   let list = document.getElementById("expense-list");
   list.innerHTML = "";
-
   expenses.forEach((exp, index) => {
-    let li = document.createElement("li");
-    li.innerHTML = `${exp.date} - ${exp.desc} (${exp.category}) 
-      <b><span class="coin">🪙</span>${currency}${exp.amount.toFixed(2)}</b> 
-      <button onclick="deleteExpense(${index})">❌</button>`;
-    list.appendChild(li);
+    list.innerHTML += `<li>${exp.category} - ${currency}${exp.amount.toFixed(2)} 
+      <button onclick="deleteExpense(${index})">❌</button></li>`;
   });
 }
 
 function deleteExpense(index) {
   expenses.splice(index, 1);
   displayExpenses();
-  updateTotal();
+  updateSummary();
 }
 
-function updateTotal() {
-  let total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-  document.getElementById("total").innerText = currency + total.toFixed(2);
+function updateSummary() {
+  let totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
+  let remaining = budget - totalSpent;
 
-  let replyBox = document.getElementById("fun-reply");
-  if (total < 50) {
-    replyBox.innerText = "🤑 Saving mode activated, nice!";
-  } else if (total < 200) {
-    replyBox.innerText = "💅 Balanced spender, keep it up!";
-  } else if (total < 500) {
-    replyBox.innerText = "⚡ Careful… money flowing fast!";
-  } else {
-    replyBox.innerText = "🔥 Big spender energy!";
-  }
+  document.getElementById("total").innerHTML = `Total Spent: ${currency}${totalSpent.toFixed(2)}`;
+  document.getElementById("balance").innerHTML = `Remaining Balance: ${currency}${remaining.toFixed(2)}`;
 
-  let budgetBox = document.getElementById("budget-status");
-  if (budget) {
-    if (total > budget) {
-      budgetBox.innerText = `⚠️ Over Budget! You spent ${currency}${(total - budget).toFixed(2)} more.`;
-    } else if (total > budget * 0.8) {
-      budgetBox.innerText = `⚡ Warning: Almost hitting your budget limit!`;
-    } else {
-      budgetBox.innerText = `✅ Safe! Within your budget.`;
-    }
-  } else {
-    budgetBox.innerText = "";
-  }
-}
+  let reply = "";
+  if (remaining <= 0) reply = "😱 You’re broke!";
+  else if (remaining < budget * 0.2) reply = "⚠️ Careful, low funds!";
+  else reply = "💖 You’re spending smart!";
 
-function setBudget() {
-  let value = parseFloat(document.getElementById("budget").value);
-  if (!isNaN(value) && value > 0) {
-    budget = value;
-    localStorage.setItem("budget", budget);
-    updateTotal();
-  }
+  document.getElementById("fun-reply").innerText = reply;
 }
 
 function saveExpenses() {
-  localStorage.setItem("expenses", JSON.stringify(expenses));
-  localStorage.setItem("currency", currency);
-  localStorage.setItem("budget", budget);
-  alert("Expenses saved successfully!");
+  let data = { budget, currency, expenses };
+  localStorage.setItem("cashcatcherData", JSON.stringify(data));
+  alert("Your expenses are saved!");
 }
 
-document.getElementById("currency-select").addEventListener("change", function () {
-  currency = this.value;
-  updateTotal();
-  displayExpenses();
-});
+function loadExpenses() {
+  let saved = localStorage.getItem("cashcatcherData");
+  if (saved) {
+    let data = JSON.parse(saved);
+    budget = data.budget;
+    currency = data.currency;
+    expenses = data.expenses;
+    document.getElementById("budget-input").value = budget;
+    document.getElementById("currency").value = currency;
+    document.getElementById("expense-section").style.display = "block";
+    displayExpenses();
+    updateSummary();
+  }
+}
 
-displayExpenses();
-updateTotal();
+window.onload = loadExpenses;
 
+   
