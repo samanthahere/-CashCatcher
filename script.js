@@ -1,79 +1,23 @@
-let expenses = [];
-let budget = 0;
-let currency = "$"; // default
-let replies = [
-  "💖 Spend wisely!",
-  "✨ Careful, money vibes alert!",
-  "💸 Oops, a little splurge!",
-  "🫣 Watch that budget!",
-  "✨ Balance intact!"
-];
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+let currency = localStorage.getItem("currency") || "$";
 
-// Load previous expenses from localStorage
-function loadExpenses() {
-  let data = JSON.parse(localStorage.getItem("cashcatcherData"));
-  if (data) {
-    budget = data.budget;
-    currency = data.currency;
-    expenses = data.expenses || [];
+document.getElementById("currency-select").value = currency;
 
-    document.getElementById("budget").value = budget;
-    document.getElementById("currency").value = currency;
-    document.getElementById("budget-display").innerText = `Budget set: ${currency}${budget}`;
-    displayExpenses();
-    updateSummary();
-  }
-}
-
-// Set budget and currency
-function setBudget() {
-  budget = parseFloat(document.getElementById("budget").value);
-  currency = document.getElementById("currency").value;
-
-  if (isNaN(budget) || budget <= 0) {
-    alert("Enter a valid budget!");
-    return;
-  }
-
-  document.getElementById("budget-display").innerText = `Budget set: ${currency}${budget}`;
-  updateSummary();
-}
-
-// Add a new expense
 function addExpense() {
   let desc = document.getElementById("desc").value;
   let amount = parseFloat(document.getElementById("amount").value);
   let category = document.getElementById("category").value;
+  let date = new Date().toLocaleDateString();
 
-  if (!desc || isNaN(amount) || amount <= 0) {
-    alert("Enter valid description and amount!");
-    return;
-  }
+  if (!desc || isNaN(amount)) return;
 
-  let expense = { desc, amount, category, date: new Date().toLocaleDateString() };
-  expenses.push(expense);
-
+  expenses.push({ desc, amount, category, date });
   displayExpenses();
-  updateSummary();
-
-  // Show fun neon reply
-  let reply = replies[Math.floor(Math.random() * replies.length)];
-  let replyElement = document.getElementById("fun-reply");
-  replyElement.innerText = reply;
-  replyElement.classList.add("neon");
-
-  // Fade out after 4 seconds
-  setTimeout(() => {
-    replyElement.innerText = "";
-    replyElement.classList.remove("neon");
-  }, 4000);
-
-  // Clear inputs
+  updateTotal();
   document.getElementById("desc").value = "";
   document.getElementById("amount").value = "";
 }
 
-// Display expenses with mini coins
 function displayExpenses() {
   let list = document.getElementById("expense-list");
   list.innerHTML = "";
@@ -81,40 +25,45 @@ function displayExpenses() {
   expenses.forEach((exp, index) => {
     let li = document.createElement("li");
     li.innerHTML = `${exp.date} - ${exp.desc} (${exp.category}) 
-      <b><span class="coin">💖</span>${currency}${exp.amount.toFixed(2)}</b> 
+      <b><span class="coin">🪙</span>${currency}${exp.amount.toFixed(2)}</b> 
       <button onclick="deleteExpense(${index})">❌</button>`;
     list.appendChild(li);
   });
 }
 
-// Delete an expense
 function deleteExpense(index) {
   expenses.splice(index, 1);
   displayExpenses();
-  updateSummary();
+  updateTotal();
 }
 
-// Update totals and remaining balance
-function updateSummary() {
-  let totalSpent = expenses.reduce((sum, e) => sum + e.amount, 0);
-  let remaining = budget - totalSpent;
+function updateTotal() {
+  let total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+  document.getElementById("total").innerText = currency + total.toFixed(2);
 
-  document.getElementById("total").innerHTML = `Total Spent: <span class="coin">💖</span>${currency}${totalSpent.toFixed(2)}`;
-
-  let balanceText = `Remaining Balance: <span class="coin">💖</span>${currency}${remaining.toFixed(2)}`;
-  if (remaining <= 0) balanceText += " 😱 Uh-oh, broke vibes!";
-  else if (remaining < budget*0.2) balanceText += " 🫣 Careful!";
-  else balanceText += " ✨ Budget safe!";
-
-  document.getElementById("balance").innerHTML = balanceText;
+  let replyBox = document.getElementById("fun-reply");
+  if (total < 50) {
+    replyBox.innerText = "🤑 Saving mode activated, nice!";
+  } else if (total < 200) {
+    replyBox.innerText = "💅 Balanced spender, keep it up!";
+  } else if (total < 500) {
+    replyBox.innerText = "⚡ Careful… money flowing fast!";
+  } else {
+    replyBox.innerText = "🔥 Big spender energy!";
+  }
 }
 
-// Save expenses and budget to localStorage
 function saveExpenses() {
-  let data = { budget, currency, expenses };
-  localStorage.setItem("cashcatcherData", JSON.stringify(data));
-  alert("Saved successfully! 💾💖");
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+  localStorage.setItem("currency", currency);
+  alert("Expenses saved successfully!");
 }
 
-// Initialize
-window.onload = loadExpenses;
+document.getElementById("currency-select").addEventListener("change", function () {
+  currency = this.value;
+  updateTotal();
+  displayExpenses();
+});
+
+displayExpenses();
+updateTotal();
