@@ -2,47 +2,47 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title> CashCatcher </title>title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CashCatcher</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="app">
-    <h1> CashCatcher </h1>
+    <h1>💸 CashCatcher 💸</h1>
 
-    <div>
-      <input type="text" id="desc" placeholder="Description">
-      <input type="number" id="amount" placeholder="Amount">
-      <select id="category">
-        <option>🍕 Food</option>
-        <option>🛍️ Shopping</option>
-        <option>💄 Beauty</option>
-        <option>🚗 Travel</option>
-      </select>
-      <select id="currency-select">
+    <!-- Budget Setup Section -->
+    <div id="budget-setup">
+      <input type="number" id="budget-input" placeholder="Enter monthly budget">
+      <select id="currency">
         <option value="$">Dollar ($)</option>
-        <option value="€">Euro (€)</option>
         <option value="৳">Taka (৳)</option>
+        <option value="€">Euro (€)</option>
       </select>
-      <button onclick="addExpense()">➕ Add Expense</button>
+      <button onclick="setBudget()">Set Budget</button>
     </div>
 
-    <div>
-      <input type="number" id="budget" placeholder="Set Monthly Budget">
-      <button onclick="setBudget()">📅 Set Budget</button>
+    <!-- Expense Section (hidden until budget set) -->
+    <div id="expense-section" style="display:none;">
+      <input type="text" id="category" placeholder="Category (e.g. 🍕 Food)">
+      <input type="number" id="amount" placeholder="Amount">
+      <button onclick="addExpense()">Add Expense</button>
+      <button onclick="saveExpenses()" class="save-btn">Save</button>
     </div>
 
+    <!-- Expense list -->
     <ul id="expense-list"></ul>
 
-    <h2>Total: <span id="total">0</span></h2>
-    <h3 id="budget-status"></h3>
+    <!-- Totals -->
+    <h3 id="total">Total Spent: 0</h3>
+    <h3 id="balance">Remaining Balance: 0</h3>
+
+    <!-- Fun replies -->
     <div id="fun-reply"></div>
-
-    <button class="save-btn" onclick="saveExpenses()">💾 Save My Expenses</button>
-
-    <footer>
-      <p>© 2025 Samantha. All Rights Reserved.</p>
-    </footer>
   </div>
+
+  <footer>
+    <p>© 2025 Samantha. All Rights Reserved.</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
